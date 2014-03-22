@@ -8,17 +8,21 @@ use yii\web\AccessControl;
 /**
  * Controller.php
  *
+ * @property boolean $_overSSL Enables/Disables SSL Filter
+ *
  * @author Christian Renner <info@christian-renner.eu>
- */ 
+ */
 class SecureController extends Controller
 {
+
+    protected $_overSSL = true;
 
     /**
      * @inheritdoc
      */
     public function behaviors()
     {
-        return [
+        $behaviors = [
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
@@ -28,13 +32,16 @@ class SecureController extends Controller
                     ],
                 ],
             ],
-            'https' => [
+        ];
+        if ($this->_overSSL) {
+            $behaviors['https'] = [
                 'class' => HttpsFilter::className(),
                 'actions' => [
                     '*' => HttpsFilter::FILTER_ACTION_REDIRECT
                 ],
-            ],
-        ];
+            ];
+        }
+        return $behaviors;
     }
 
 }
