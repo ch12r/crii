@@ -18,6 +18,14 @@ echo "<?php\n";
 ?>
 
 namespace <?= $generator->ns ?>;
+<?php
+$baseClass = ltrim($generator->baseClass, '\\');
+$isCriiAR = ($baseClass == 'ch12r\\crii\\db\\ActiveRecord');
+if ($isCriiAR) {
+    echo "\n";
+    echo 'use ch12r\\crii\\db\\ActiveRecord'."\n";
+}
+?>
 
 /**
  * This is the model class for table "<?= $tableName ?>".
@@ -32,18 +40,16 @@ namespace <?= $generator->ns ?>;
 <?php endforeach; ?>
 <?php endif; ?>
 <?php
-$baseClass = ltrim($generator->baseClass, '\\');
-$isCriiAR = ($baseClass == 'ch12r\\crii\\db\\ActiveRecord');
 if ($isCriiAR) {
     echo ' * '."\n";
     echo ' * @method '.$className.'|null find()'."\n";
-    echo ' * @method '.$className.'|null findAll()'."\n";
+    echo ' * @method '.$className.'[]|null findAll()'."\n";
     echo ' * '."\n";
 }
 ?>
  */
 
-class <?= $className ?> extends <?= '\\' . $baseClass . "\n" ?>
+class <?= $className ?> extends <?php echo ($isCriiAR)? ('ActiveRecord') : ('\\' . $baseClass) . "\n"; ?>
 {
     /**
      * @inheritdoc
