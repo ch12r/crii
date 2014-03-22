@@ -23,7 +23,7 @@ $baseClass = ltrim($generator->baseClass, '\\');
 $isCriiAR = ($baseClass == 'ch12r\\crii\\db\\ActiveRecord');
 if ($isCriiAR) {
     echo "\n";
-    echo 'use ch12r\\crii\\db\\ActiveRecord'."\n";
+    echo 'use ch12r\\crii\\db\\ActiveRecord;'."\n";
 }
 ?>
 
@@ -42,8 +42,8 @@ if ($isCriiAR) {
 <?php
 if ($isCriiAR) {
     echo ' * '."\n";
-    echo ' * @method '.$className.'|null find()'."\n";
-    echo ' * @method '.$className.'[]|null findAll()'."\n";
+    echo ' * @static '.$className.'|null find()'."\n";
+    echo ' * @static '.$className.'[]|null findAll()'."\n";
     echo ' * '."\n";
 }
 ?>
@@ -51,6 +51,7 @@ if ($isCriiAR) {
 
 class <?= $className ?> extends <?php echo ($isCriiAR)? ('ActiveRecord') : ('\\' . $baseClass) . "\n"; ?>
 {
+
     /**
      * @inheritdoc
      */
