@@ -1,4 +1,4 @@
-crii
+yii2-crii
 ====
 
-crii includes little helpers for improving performance with yii2.
+yii2-crii includes little helpers for improving performance during developing with yii2.
