@@ -9,7 +9,7 @@ use yii\db\ActiveQuery;
  *
  * @author Christian Renner <info@christian-renner.eu>
  */
-class ActiveRecord extends yii\db\ActiveRecord
+class ActiveRecord extends \yii\db\ActiveRecord
 {
 
     /**
