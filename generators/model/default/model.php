@@ -49,7 +49,7 @@ if ($isCriiAR) {
 ?>
  */
 
-class <?= $className ?> extends <?php echo ($isCriiAR)? ('ActiveRecord') : ('\\' . $baseClass) . "\n"; ?>
+class <?= $className ?> extends <?php echo (($isCriiAR)? 'ActiveRecord' : '\\' . $baseClass) . "\n"; ?>
 {
 
     /**
