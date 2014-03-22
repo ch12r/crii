@@ -12,7 +12,7 @@ use yii\web\VerbFilter;
  * HttpsFilter.php
  *
  * @author Christian Renner <info@christian-renner.eu>
- */ 
+ */
 class HttpsFilter extends VerbFilter
 {
 
@@ -32,14 +32,14 @@ class HttpsFilter extends VerbFilter
             throw new HttpException(500, 'Filter is only supported in web controller context.');
         }
         if (isset($this->actions[$action->id])) {
-            $action = $this->actions[$action->id];
+            $filterAction = $this->actions[$action->id];
         } else if(isset($this->actions['*'])) {
-            $action = $this->actions['*'];
+            $filterAction = $this->actions['*'];
         } else {
             return $event->isValid;
         }
 
-        if (!in_array($action, array(self::FILTER_ACTION_QUIT_ON_ERROR, self::FILTER_ACTION_REDIRECT), true)) {
+        if (!in_array($filterAction, array(self::FILTER_ACTION_QUIT_ON_ERROR, self::FILTER_ACTION_REDIRECT), true)) {
             throw new HttpException(500, 'Misconfigured filter. Unknown value given.');
         }
 
@@ -47,11 +47,11 @@ class HttpsFilter extends VerbFilter
          * @var $request \yii\web\Request
          */
         $request = Yii::$app->getRequest();
-        if (!$request->isSecureConnection()) {
-            if ($action == self::FILTER_ACTION_QUIT_ON_ERROR) {
+        if (!$request->isSecureConnection) {
+            if ($filterAction == self::FILTER_ACTION_QUIT_ON_ERROR) {
                 throw new HttpException(500, 'Page is only available over SSL. Please use https.');
             }
-            if ($action == self::FILTER_ACTION_REDIRECT) {
+            if ($filterAction == self::FILTER_ACTION_REDIRECT) {
                 $controller->redirect(
                     Url::toRoute($controller->getRoute(), 'https')
                 );
