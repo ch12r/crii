@@ -2,6 +2,7 @@
 
 namespace ch12r\crii\web;
 
+use ch12r\crii\behaviors\HttpsFilter;
 use yii\web\AccessControl;
 
 /**
@@ -25,6 +26,12 @@ class SecureController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                ],
+            ],
+            'https' => [
+                'class' => HttpsFilter::className(),
+                'actions' => [
+                    '*' => HttpsFilter::FILTER_ACTION_REDIRECT
                 ],
             ],
         ];
