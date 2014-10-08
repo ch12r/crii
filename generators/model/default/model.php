@@ -20,10 +20,10 @@ echo "<?php\n";
 namespace <?= $generator->ns ?>;
 <?php
 $baseClass = ltrim($generator->baseClass, '\\');
-$isCriiAR = ($baseClass == 'ch12r\\crii\\db\\ActiveRecord');
+$isCriiAR = ($baseClass == 'ch12r\\crii.php\\db\\ActiveRecord');
 if ($isCriiAR) {
     echo "\n";
-    echo 'use ch12r\\crii\\db\\ActiveRecord;'."\n";
+    echo 'use ch12r\\crii.php\\db\\ActiveRecord;'."\n";
 }
 ?>
 

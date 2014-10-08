@@ -43,5 +43,4 @@ class SecureController extends Controller
         }
         return $behaviors;
     }
-
 }

@@ -13,14 +13,16 @@ class ActiveRecord extends \yii\db\ActiveRecord
 {
 
     /**
-     * @param ActiveQuery $query
+     * @param mixed|ActiveQuery $query
      *
      * @return ActiveRecord[]
      */
-    public static function findAll(ActiveQuery $query)
+    public static function findAll($query)
     {
-        return $query->all();
+        if ($query instanceof ActiveQuery) {
+            return $query->all();
+        }
+        return parent::findAll($query);
     }
-
 }
  
