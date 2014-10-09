@@ -4,7 +4,7 @@
     "keywords": ["yii2", "crii"],
     "type": "yii2-extension",
     "license": "MIT",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "support": {
         "issues": "https://github.com/ch12r/yii2-crii/issues",
         "source": "https://github.com/ch12r/yii2-crii"
@@ -21,5 +21,5 @@
     "autoload": {
         "psr-4": { "ch12r\\crii\\": "" }
     },
-    "bin": ["crii.php"]
+    "bin": ["bin/crii.php"]
 }
