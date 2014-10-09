@@ -5,7 +5,7 @@
 
 defined('YII_DEBUG') or define('YII_DEBUG', true);
 
-$yiiDir = dirname(__DIR__).'../../yiisoft/yii2';
+$yiiDir = dirname(__DIR__).'../../../yiisoft/yii2';
 require($yiiDir . '/Yii.php');
 
 Yii::setAlias('@crii', dirname(__DIR__));
