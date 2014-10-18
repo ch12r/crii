@@ -4,7 +4,7 @@
     "keywords": ["yii2", "crii"],
     "type": "yii2-extension",
     "license": "MIT",
-    "version": "0.0.9",
+    "version": "0.0.10",
     "support": {
         "issues": "https://github.com/ch12r/yii2-crii/issues",
         "source": "https://github.com/ch12r/yii2-crii"
