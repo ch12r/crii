@@ -7,6 +7,9 @@
 
 namespace ch12r\crii\behaviors;
 
+use DateTime;
+use DateTimeZone;
+use Yii;
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
 
@@ -49,11 +52,28 @@ class UnixTimestampBehavior extends Behavior
     {
         foreach ($this->datetimeAttributes as $datetimeAttribute) {
             if (isset($this->owner->$datetimeAttribute)) {
-                $this->owner->$datetimeAttribute = DateTimeParser::parse(
-                    $this->owner->$datetimeAttribute,
-                    self::YII_DATETIME_INTERNAL_FORMAT
-                );
+                $this->owner->$datetimeAttribute = $this->parseDatetime($this->owner->$datetimeAttribute);
             }
+        }
+    }
+
+    /**
+     * @param $value
+     *
+     * @return bool|int
+     */
+    private function parseDatetime($value)
+    {
+        $date = DateTime::createFromFormat(self::YII_DATETIME_INTERNAL_FORMAT, $value, new DateTimeZone(Yii::$app->timeZone));
+        $errors = DateTime::getLastErrors();
+        if ($date === false || $errors['error_count'] || $errors['warning_count']) {
+            return false;
+        } else {
+            // if no time was provided in the format string set time to 0 to get a simple date timestamp
+            if (strpbrk(self::YII_DATETIME_INTERNAL_FORMAT, 'HhGgis') === false) {
+                $date->setTime(0, 0, 0);
+            }
+            return $date->getTimestamp();
         }
     }
 }
