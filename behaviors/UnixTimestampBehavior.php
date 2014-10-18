@@ -16,8 +16,6 @@ use yii\db\ActiveRecord;
 class UnixTimestampBehavior extends Behavior
 {
 
-    const YII_DATETIME_INTERNAL_FORMAT = 'yyyy-MM-dd hh:mm:ss';
-
     public $datetimeAttributes = array();
 
     public function events()
@@ -62,15 +60,15 @@ class UnixTimestampBehavior extends Behavior
      *
      * @return bool|int
      */
-    private function parseDatetime($value)
+    private function parseDatetime($value, $format = 'Y-m-d H:i:s')
     {
-        $date = DateTime::createFromFormat(self::YII_DATETIME_INTERNAL_FORMAT, $value, new DateTimeZone(Yii::$app->timeZone));
+        $date = DateTime::createFromFormat($format, $value, new DateTimeZone(Yii::$app->timeZone));
         $errors = DateTime::getLastErrors();
         if ($date === false || $errors['error_count'] || $errors['warning_count']) {
             return false;
         } else {
             // if no time was provided in the format string set time to 0 to get a simple date timestamp
-            if (strpbrk(self::YII_DATETIME_INTERNAL_FORMAT, 'HhGgis') === false) {
+            if (strpbrk($format, 'HhGgis') === false) {
                 $date->setTime(0, 0, 0);
             }
             return $date->getTimestamp();
