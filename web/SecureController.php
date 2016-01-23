@@ -3,7 +3,7 @@
 namespace ch12r\crii\web;
 
 use ch12r\crii\behaviors\HttpsFilter;
-use yii\web\AccessControl;
+use yii\filters\AccessControl;
 
 /**
  * Controller.php

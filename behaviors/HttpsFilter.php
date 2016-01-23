@@ -3,10 +3,10 @@
 namespace ch12r\crii\behaviors;
 
 use Yii;
+use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\HttpException;
-use yii\web\VerbFilter;
 
 /**
  * HttpsFilter.php
@@ -59,5 +59,4 @@ class HttpsFilter extends VerbFilter
         }
         return $event->isValid;
     }
-
 }

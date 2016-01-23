@@ -9,6 +9,5 @@ namespace ch12r\crii\web;
  */ 
 class Controller extends \yii\web\Controller
 {
-
 }
  
