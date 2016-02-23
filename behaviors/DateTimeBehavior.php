@@ -22,18 +22,16 @@ class DateTimeBehavior extends Behavior
     public $dateTimeAttributes = array();
 
     /**
+     *
      * @var string the basic timezone which is used to normalize dates
      */
-    public $timezone;
+    public $timezone = 'UTC';
 
     private $_dateTimeZone;
 
     public function init()
     {
         parent::init();
-        if (!isset($this->timezone)) {
-            $this->timezone = Yii::$app->timeZone;
-        }
         $this->_dateTimeZone = new DateTimeZone($this->timezone);
     }
 
@@ -58,6 +56,7 @@ class DateTimeBehavior extends Behavior
                     $value = new DateTime($value, $this->_dateTimeZone);
                 }
                 if ($value instanceof \DateTime) {
+                    // Sets timezone to base timezone, e.g. utc
                     $value = $value->setTimezone($this->_dateTimeZone)->format('Y-m-d H:i:s');
                 } else {
                     $value = null;
@@ -84,7 +83,7 @@ class DateTimeBehavior extends Behavior
      * @param        $value
      * @param string $format
      *
-     * @return null|DateTime
+     * @return null|DateTime timezone is set to base timezone
      */
     private function parseDatetime($value, $format = 'Y-m-d H:i:s')
     {
