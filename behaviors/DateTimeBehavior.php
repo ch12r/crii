@@ -41,10 +41,10 @@ class DateTimeBehavior extends Behavior
     {
         parent::init();
         $this->_baseDateTimeZone = new DateTimeZone($this->baseTimezone);
-        if (!isset($this->clientTimeZone)) {
-            $this->clientTimeZone = Yii::$app->timeZone;
+        if (!isset($this->clientTimezone)) {
+            $this->clientTimezone = Yii::$app->timeZone;
         }
-        $this->_clientDateTimeZone = new DateTimeZone($this->clientTimeZone);
+        $this->_clientDateTimeZone = new DateTimeZone($this->clientTimezone);
     }
 
     public function events()
