@@ -25,14 +25,26 @@ class DateTimeBehavior extends Behavior
      *
      * @var string the basic timezone which is used to normalize dates
      */
-    public $timezone = 'UTC';
+    public $baseTimezone = 'UTC';
 
-    private $_dateTimeZone;
+    /**
+     *
+     * @var string the clients timezone which is used
+     */
+    public $clientTimezone = null;
+
+    private $_baseDateTimeZone;
+
+    private $_clientDateTimeZone;
 
     public function init()
     {
         parent::init();
-        $this->_dateTimeZone = new DateTimeZone($this->timezone);
+        $this->_baseDateTimeZone = new DateTimeZone($this->baseTimezone);
+        if (!isset($this->clientTimeZone)) {
+            $this->clientTimeZone = Yii::$app->timeZone;
+        }
+        $this->_clientDateTimeZone = new DateTimeZone($this->clientTimeZone);
     }
 
     public function events()
@@ -53,11 +65,11 @@ class DateTimeBehavior extends Behavior
                     if (strlen($value) == 16) {
                         $value .= ':00';
                     }
-                    $value = new DateTime($value, $this->_dateTimeZone);
+                    $value = new DateTime($value, $this->_clientDateTimeZone);
                 }
                 if ($value instanceof \DateTime) {
                     // Sets timezone to base timezone, e.g. utc
-                    $value = $value->setTimezone($this->_dateTimeZone)->format('Y-m-d H:i:s');
+                    $value = $value->setTimezone($this->_baseDateTimeZone)->format('Y-m-d H:i:s');
                 } else {
                     $value = null;
                 }
@@ -87,7 +99,7 @@ class DateTimeBehavior extends Behavior
      */
     private function parseDatetime($value, $format = 'Y-m-d H:i:s')
     {
-        $date = DateTime::createFromFormat($format, $value, $this->_dateTimeZone);
+        $date = DateTime::createFromFormat($format, $value, $this->_baseDateTimeZone);
         $errors = DateTime::getLastErrors();
         if ($date === false || $errors['error_count'] || $errors['warning_count']) {
             return null;
@@ -96,6 +108,7 @@ class DateTimeBehavior extends Behavior
         if (strpbrk($format, 'HhGgis') === false) {
             $date->setTime(0, 0, 0);
         }
+        $date->setTimezone($this->_clientDateTimeZone);
         return $date;
     }
 }
